@@ -1,2 +1,5 @@
 #local development virtualenv
 .venv
+
+#cached files
+*.pyc
