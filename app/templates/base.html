@@ -1,17 +1,73 @@
-<html>
-    <head>
-      {% if title %}
-      <title>{{ title }} - Microblog</title>
-      {% else %}
-      <title>Welcome to Microblog</title>
-      {% endif %}
-    </head>
-    <body>
+<html ng-app="PiFaceApp">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+<style>
+	.btn-group button {
+	  background-color: #4CAF50; /* Green background */
+	  border: 1px solid green; /* Green border */
+	  border-radius: 8px;
+	  color: white; /* White text */
+	  padding: 10px 24px; /* Some padding */
+	  cursor: pointer; /* Pointer/hand icon */
+	  float: center; /* Float the buttons side by side */
+	  transition: all 0.5s;
+      margin: 5px;
+	}
+
+	.button span {
+	  cursor: pointer;
+	  display: inline-block;
+	  position: relative;
+	  transition: 0.5s;
+	}
+
+	.button span:after {
+	  content: '\00bb';
+	  position: absolute;
+	  opacity: 0;
+	  top: 0;
+	  right: -20px;
+	  transition: 0.5s;
+	}
+
+	.button:hover span {
+	  padding-right: 25px;
+	}
+
+	.button:hover span:after {
+	  opacity: 1;
+	  right: 0;
+	}
+
+</style>
+
+  {% if title %}
+  <title>{{ title }} - Microblog</title>
+  {% else %}
+  <title>Welcome to Microblog</title>
+  {% endif %}
+</head>
+<body ng-controller="PiFaceController">
+		<div class="btn-group" style="width:100%">
+            <button ng-click="homepage();">HomePage<a href="/"></button>
+		  <button>IP Address<a href="/get_ip_addr"></button>
+		  <button>Mount Status<a href="/nas_mount_status"></button>
+		  <button>Deluge Status<a href="/deluge_status"></button>
+		</div>
+
         <div>Homepage: <a href="/">Home</a></div>
         <div>IP Address: <a href="/get_ip_addr">ifconfig</a></div>
         <div>Mount status: <a href="/nas_mount_status">mnt_status</a></div>
         <div>Deluge status: <a href="/deluge_status">deluge_status</a></div>
         <hr>
         {% block content %}{% endblock %}
-    </body>
+
+<div class="clearfix"></div>
+<script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
 </html>
