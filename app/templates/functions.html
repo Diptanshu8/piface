@@ -4,5 +4,11 @@
        {% if ip_addr %}
             <div> IP address : {{ ip_addr }} </div>
        {% endif %}
+       {% if mount_status %}
+            <div> NAS MOUNT STATUS : {{ mount_status }} </div>
+       {% endif %}
+       {% if d_status %}
+            <div> DELUGED STATUS : {{ d_status }} </div>
+       {% endif %}
 {% endblock %}
     
