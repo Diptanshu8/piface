@@ -51,23 +51,19 @@
 </head>
 <body ng-controller="PiFaceController">
 		<div class="btn-group" style="width:100%">
-            <button ng-click="homepage();">HomePage<a href="/"></button>
-		  <button>IP Address<a href="/get_ip_addr"></button>
-		  <button>Mount Status<a href="/nas_mount_status"></button>
-		  <button>Deluge Status<a href="/deluge_status"></button>
+          <button id-"home_pg_btn">HomePage</button>
+		  <button id="ip_addr_btn" ng-click="btn_click('ip_addr_btn');">IP Address</button>
+          <button id="mnt_stat_btn" ng-click="btn_click('mnt_stat_btn');">Mount Status</button>
+		  <button id="delg_stat_btn ng-click="btn_click('delg_stat_btn');"">Deluge Status</button>
 		</div>
 
-        <div>Homepage: <a href="/">Home</a></div>
-        <div>IP Address: <a href="/get_ip_addr">ifconfig</a></div>
-        <div>Mount status: <a href="/nas_mount_status">mnt_status</a></div>
-        <div>Deluge status: <a href="/deluge_status">deluge_status</a></div>
-        <hr>
         {% block content %}{% endblock %}
 
 <div class="clearfix"></div>
 <script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>

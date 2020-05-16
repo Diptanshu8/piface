@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-       {% if ip_addr %}
-            <div> IP address : {{ ip_addr }} </div>
-       {% endif %}
+       {% raw %}
+       <div ng-show="ip_show" class="ng-hide"> IP address : {{ ip_addr }} </div>
        {% if mount_status %}
             <div> NAS MOUNT STATUS : {{ mount_status }} </div>
        {% endif %}
        {% if d_status %}
             <div> DELUGED STATUS : {{ d_status }} </div>
        {% endif %}
+       {% endraw %}
 {% endblock %}
     

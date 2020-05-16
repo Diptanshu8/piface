@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template
+from flask import render_template, jsonify
 
 # Constants
 NAS_MNT_POINT = "/home/pi/Taansh_HD"
@@ -25,8 +25,8 @@ def get_ip_addr():
     ip_addr = None
     o = subprocess.run(["hostname","-I"], capture_output=True)
     if (o.returncode==0):
-    	ip_addr = o.stdout
-    return render_template('functions.html', title="Diptanshu's", user = user, ip_addr = ip_addr)
+    	ip_addr = o.stdout.decode("utf-8")
+    return jsonify(ip_addr)
 
 @app.route('/nas_mount_status')
 def nas_mount_status():
