@@ -9,17 +9,6 @@ DELGD_CMD = ["deluged"]
 # Userdetails for base.html
 user = {'username':'Taansh'}
 
-# Feature list to enumerate all the features being provided right now
-features = [
-    {
-	    'name' : 'IP Address',
-	    'Desc' : "Display the IP address of the raspberry pi"
-    },
-    {
-            'name' : "NAS mount",
-            'Desc' : "Displays status of NAS mount"
-         },
-]
 @app.route('/get_ip_addr')
 def get_ip_addr():
     import subprocess
@@ -65,4 +54,4 @@ def deluge_status():
 
 @app.route('/')
 def index():
-    return render_template('functions.html', title="Diptanshu's", user = user, features = features)
+    return render_template('functions.html', title="Diptanshu's", user = user)
