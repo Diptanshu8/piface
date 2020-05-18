@@ -50,12 +50,7 @@
   {% endif %}
 </head>
 <body ng-controller="PiFaceController">
-		<div class="btn-group" style="width:100%">
-          <button id-"home_pg_btn">HomePage</button>
-		  <button id="ip_addr_btn" ng-click="btn_click('ip_addr_btn');">IP Address</button>
-          <button id="mnt_stat_btn" ng-click="btn_click('mnt_stat_btn');">Mount Status</button>
-		  <button id="delg_stat_btn ng-click="btn_click('delg_stat_btn');"">Deluge Status</button>
-		</div>
+        {%block buttons %}{% endblock %}
 
         {% block content %}{% endblock %}
 

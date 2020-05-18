@@ -35,8 +35,7 @@ def nas_mount_status():
     if not mount_status:
         subprocess.run(NAS_MNT_CMD, capture_output=True) 
         mount_status = os.path.ismount(NAS_MNT_POINT)
-
-    return render_template('functions.html', title="Diptanshu's", user = user, mount_status = os.path.ismount(NAS_MNT_POINT))
+    return jsonify(os.path.ismount(NAS_MNT_POINT))
     
 @app.route('/deluge_status')
 def deluge_status():
@@ -46,8 +45,7 @@ def deluge_status():
     for p in pidlist:
         if "deluge" in p[1]:
             d_status = "Enabled"
-    print("Inside deluge_status for d_status = "+ d_status)
-    return render_template('functions.html', title="Diptanshu's", user = user, d_status = d_status)
+    return jsonify(d_status)
 
 @app.route('/')
 def index():

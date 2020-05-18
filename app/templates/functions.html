@@ -1,14 +1,17 @@
 {% extends "base.html" %}
 
+{% block buttons %}
+		<div class="btn-group" style="width:100%">
+          <button id-"home_pg_btn"   ng-click="btn_click('home_pg_btn');"  >HomePage</button>
+		  <button id="ip_addr_btn"   ng-click="btn_click('ip_addr_btn');"  >IP Address</button>
+          <button id="mnt_stat_btn"  ng-click="btn_click('mnt_stat_btn');" >Mount Status</button>
+		  <button id="delg_stat_btn" ng-click="btn_click('delg_stat_btn');">Deluge Status</button>
+		</div>
+{% endblock %}
+
 {% block content %}
        {% raw %}
-       <div ng-show="ip_show" class="ng-hide"> IP address : {{ ip_addr }} </div>
-       {% if mount_status %}
-            <div> NAS MOUNT STATUS : {{ mount_status }} </div>
-       {% endif %}
-       {% if d_status %}
-            <div> DELUGED STATUS : {{ d_status }} </div>
-       {% endif %}
+           <div ng-show=present class="ng-hide" ng-repeat="item in present">{{ item[0] }} : {{ item[3] }} </div>
        {% endraw %}
 {% endblock %}
     
