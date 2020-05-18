@@ -52,6 +52,8 @@
                           $log.log(data);
                         }).
                         error(function(error) {
+                            $scope.present[j][3]=error;
+                            $scope.present[j][2] = true;
                             $log.log(error);
                         });
                 }

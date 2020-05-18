@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, jsonify
+from flask import render_template, jsonify, make_response
 
 # Constants
 NAS_MNT_POINT = "/home/pi/Taansh_HD"
@@ -25,9 +25,12 @@ def get_ip_addr():
     import subprocess
     ip_addr = None
     o = subprocess.run(["hostname","-I"], capture_output=True)
+    ip_addr = o.stdout.decode("utf-8")
     if (o.returncode==0):
-    	ip_addr = o.stdout.decode("utf-8")
-    return jsonify(ip_addr)
+        return make_response(jsonify(ip_addr), 200);
+    else:
+        return make_response(jsonify(ip_addr), 500);
+
 
 @app.route('/nas_mount_status')
 def nas_mount_status():
@@ -49,13 +52,16 @@ def deluge_status():
             d_status = "Enabled"
 
     if (d_status == "Disabled"):
-        subprocess.run(DELGD_CMD)
+        try:
+            subprocess.run(DELGD_CMD)
+        except subprocess.CalledProcessError as e:
+            return make_response(jsonify(e), 500)
 
     pidlist = [(p.pid, p.name()) for p in ps.process_iter()]
     for p in pidlist:
         if "deluge" in p[1]:
             d_status = "Enabled"
-    return jsonify(d_status)
+    return make_response(jsonify(d_status), 200)
 
 @app.route('/')
 def index():
