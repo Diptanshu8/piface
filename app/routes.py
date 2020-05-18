@@ -4,6 +4,7 @@ from flask import render_template, jsonify
 # Constants
 NAS_MNT_POINT = "/home/pi/Taansh_HD"
 NAS_MNT_CMD = ["sudo","mount.cifs","-vvv","//192.168.1.1/DJ","/home/pi/Taansh_HD/", "-o", "guest,vers=1.0"]
+DELGD_CMD = ["deluged"]
 
 # Userdetails for base.html
 user = {'username':'Taansh'}
@@ -40,7 +41,16 @@ def nas_mount_status():
 @app.route('/deluge_status')
 def deluge_status():
     import psutil as ps
+    import subprocess
     d_status = "Disabled"
+    pidlist = [(p.pid, p.name()) for p in ps.process_iter()]
+    for p in pidlist:
+        if "deluge" in p[1]:
+            d_status = "Enabled"
+
+    if (d_status == "Disabled"):
+        subprocess.run(DELGD_CMD)
+
     pidlist = [(p.pid, p.name()) for p in ps.process_iter()]
     for p in pidlist:
         if "deluge" in p[1]:
