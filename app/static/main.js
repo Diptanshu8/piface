@@ -13,7 +13,8 @@
     $scope.features['home_pg_btn'] = ['Home Page','/', false, ''];
     $scope.features['ip_addr_btn'] = ['IP Address','/get_ip_addr', false, ''];
     $scope.features['mnt_stat_btn'] = ['NAS mount status','/nas_mount_status', false, ''];
-    $scope.features['delg_stat_btn'] = ['Deluge D status','/deluge_status', false, ''];
+    $scope.features['delg_stat_btn'] = ['Deluge Daemon status','/deluge_status', false, ''];
+    $scope.features['delgweb_stat_btn'] = ['Deluge Web status','/delugeweb_status', false, ''];
 	$scope.present = [];
     
         $scope.btn_click = function(btn_id) {

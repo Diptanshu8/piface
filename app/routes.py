@@ -3,8 +3,10 @@ from flask import render_template, jsonify, make_response
 
 # Constants
 NAS_MNT_POINT = "/home/pi/Taansh_HD"
+DELGW_CONF = "/home/pi/.conf/deluge/web.conf"
 NAS_MNT_CMD = ["sudo","mount.cifs","-vvv","//192.168.1.1/DJ","/home/pi/Taansh_HD/", "-o", "guest,vers=1.0"]
 DELGD_CMD = ["deluged"]
+DELGW_CMD = ["deluge-web","-f"]
 
 # Userdetails for base.html
 user = {'username':'Taansh'}
@@ -37,7 +39,7 @@ def deluge_status():
     d_status = "Disabled"
     pidlist = [(p.pid, p.name()) for p in ps.process_iter()]
     for p in pidlist:
-        if "deluge" in p[1]:
+        if "deluged" in p[1]:
             d_status = "Enabled"
 
     if (d_status == "Disabled"):
@@ -48,8 +50,31 @@ def deluge_status():
 
     pidlist = [(p.pid, p.name()) for p in ps.process_iter()]
     for p in pidlist:
-        if "deluge" in p[1]:
+        if "deluged" in p[1]:
             d_status = "Enabled"
+    return make_response(jsonify(d_status), 200)
+
+@app.route('/delugeweb_status')
+def delugeweb_status():
+    import psutil as ps
+    import subprocess
+    d_status = "Disabled"
+    pidlist = [(p.pid, p.name()) for p in ps.process_iter()]
+    for p in pidlist:
+        if "deluge-web" in p[1]:
+            d_status = "Enabled"
+
+    if (d_status == "Disabled"):
+        try:
+            subprocess.run(DELGW_CMD)
+        except subprocess.CalledProcessError as e:
+            return make_response(jsonify(e), 500)
+
+    pidlist = [(p.pid, p.name()) for p in ps.process_iter()]
+    for p in pidlist:
+        if "deluge-web" in p[1]:
+            d_status = "Enabled"
+
     return make_response(jsonify(d_status), 200)
 
 @app.route('/')
