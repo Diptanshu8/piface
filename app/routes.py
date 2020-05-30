@@ -7,6 +7,7 @@ DELGW_CONF = "/home/pi/.conf/deluge/web.conf"
 NAS_MNT_CMD = ["sudo","mount.cifs","-vvv","//192.168.1.1/DJ","/home/pi/Taansh_HD/", "-o", "guest,vers=1.0"]
 DELGD_CMD = ["deluged"]
 DELGW_CMD = ["deluge-web","-f"]
+RETROPIE_LAUNCH_CMD = ["emulationstation"]
 
 # Userdetails for base.html
 user = {'username':'Taansh'}
@@ -77,6 +78,34 @@ def delugeweb_status():
 
     return make_response(jsonify(d_status), 200)
 
+@app.route('/launch_retropie')
+def launch_retropie():
+    import psutil as ps
+    import subprocess
+    status = "Disabled"
+    pidlist = [(p.pid, p.name()) for p in ps.process_iter()]
+    for p in pidlist:
+        if "emulation" in p[1]:
+            status = "Enabled"
+
+    if (status == "Disabled"):
+        try:
+            subprocess.run(RETROPIE_LAUNCH_CMD)
+        except subprocess.CalledProcessError as e:
+            return make_response(jsonify(e), 500)
+    return make_response(jsonify(status), 200)
+
+@app.route('/reboot')
+def reboot():
+    import os
+    os.system("sudo shutdown -r now")
+    return make_response(jsonify("Rebooting..."), 200)
+
 @app.route('/')
 def index():
     return render_template('functions.html', title="Diptanshu's", user = user)
+
+# command to kill emulationstation
+# ps -ef | awk '/emulation/ {print $2}' | xargs kill
+#
+
