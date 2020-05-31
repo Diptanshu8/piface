@@ -1,5 +1,6 @@
 from app import app
-from flask import render_template, jsonify, make_response
+from flask import render_template, jsonify, make_response, request
+from app import logger
 
 # Constants
 NAS_MNT_POINT = "/home/pi/Taansh_HD"
@@ -104,6 +105,28 @@ def reboot():
 @app.route('/')
 def index():
     return render_template('functions.html', title="Diptanshu's", user = user)
+
+@app.after_request
+def after_request(response):
+    """ Logging after every request. """
+    # This avoids the duplication of registry in the log,
+    # since that 500 is already logged via @app.errorhandler.
+    if response.status_code != 500:
+        logger.app_log.info('%s %s %s %s %s',
+                      request.remote_addr,
+                      request.method,
+                      request.scheme,
+                      request.full_path,
+                      response.status)
+    return response
+
+@app.errorhandler(Exception)
+def exceptions(e):
+    """ Logging after every Exception. """
+    tb = traceback.format_exc()
+    logger.app_log.error('5xx INTERNAL SERVER ERROR\n%s',
+                  tb)
+    return "Internal Server Error", 500
 
 # command to kill emulationstation
 # ps -ef | awk '/emulation/ {print $2}' | xargs kill

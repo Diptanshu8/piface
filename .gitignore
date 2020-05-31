@@ -1,5 +1,8 @@
-#local development virtualenv
+# local development virtualenv
 .venv
 
-#cached files
+# cached files
 *.pyc
+
+# log files
+*.log
