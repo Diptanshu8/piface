@@ -1,6 +1,7 @@
 from app import app
 from flask import render_template, jsonify, make_response, request
 from app import logger
+import traceback
 
 # Constants
 NAS_MNT_POINT = "/home/pi/Taansh_HD"
@@ -8,7 +9,7 @@ DELGW_CONF = "/home/pi/.conf/deluge/web.conf"
 NAS_MNT_CMD = ["sudo","mount.cifs","-vvv","//192.168.1.1/DJ","/home/pi/Taansh_HD/", "-o", "guest,vers=1.0"]
 DELGD_CMD = ["deluged"]
 DELGW_CMD = ["deluge-web","-f"]
-RETROPIE_LAUNCH_CMD = ["emulationstation"]
+RETROPIE_LAUNCH_CMD = 'screen -s /bin/bash -d -m emulationstation'
 
 # Userdetails for base.html
 user = {'username':'Taansh'}
@@ -82,7 +83,7 @@ def delugeweb_status():
 @app.route('/launch_retropie')
 def launch_retropie():
     import psutil as ps
-    import subprocess
+    import os
     status = "Disabled"
     pidlist = [(p.pid, p.name()) for p in ps.process_iter()]
     for p in pidlist:
@@ -90,10 +91,8 @@ def launch_retropie():
             status = "Enabled"
 
     if (status == "Disabled"):
-        try:
-            subprocess.run(RETROPIE_LAUNCH_CMD)
-        except subprocess.CalledProcessError as e:
-            return make_response(jsonify(e), 500)
+        os.system(RETROPIE_LAUNCH_CMD)
+        status = "Enabled"
     return make_response(jsonify(status), 200)
 
 @app.route('/reboot')
