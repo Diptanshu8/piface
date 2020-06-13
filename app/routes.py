@@ -95,6 +95,12 @@ def launch_retropie():
         status = "Enabled"
     return make_response(jsonify(status), 200)
 
+@app.route('/display_up')
+def display_up():
+    import os
+    os.system("startx")
+    return make_response(jsonify("Power Up the Pixel Desktop"), 200)
+
 @app.route('/reboot')
 def reboot():
     import os

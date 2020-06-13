@@ -16,6 +16,7 @@
     $scope.features['delg_stat_btn'] = ['Deluge Daemon status','/deluge_status', false, ''];
     $scope.features['delgweb_stat_btn'] = ['Deluge Web status','/delugeweb_status', false, ''];
     $scope.features['retropie_launch_btn'] = ['Launch Retropie','/launch_retropie', false, ''];
+    $scope.features['display_up_btn'] = ['Power Display Up','/display_up', false, ''];
     $scope.features['reboot_btn'] = ['Reboot Raspi','/reboot', false, ''];
 	$scope.present = [];
     
