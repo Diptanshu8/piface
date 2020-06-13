@@ -6,3 +6,6 @@
 
 # log files
 *.log
+
+#frontend
+app/static/bower_components/
