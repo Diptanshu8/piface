@@ -6,9 +6,9 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
 
   {% if title %}
-  <title>{{ title }} - Microblog</title>
+  <title>{{ title }} PiFace</title>
   {% else %}
-  <title>Welcome to Microblog</title>
+  <title>Welcome to PiFace</title>
   {% endif %}
 
 </head>
@@ -21,8 +21,6 @@
   <li class="right"><a href="#about">About</a></li>
 </ul>
         {%block buttons %}{% endblock %}
-
-        {% block content %}{% endblock %}
 
 <div class="clearfix"></div>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>

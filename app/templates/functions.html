@@ -11,10 +11,3 @@
 		  <button class="col-3 btn btn-primary rounded" id="reboot_btn" ng-click="btn_click($event);">Reboot Raspi</button>
 		</div>
 {% endblock %}
-
-{% block content %}
-       {% raw %}
-           <div ng-show=present class="ng-hide" ng-repeat="item in present">{{ item[0] }} : {{ item[3] }} </div>
-       {% endraw %}
-{% endblock %}
-    
