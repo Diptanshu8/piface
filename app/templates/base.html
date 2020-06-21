@@ -3,23 +3,23 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-<style>
-       .btn-group button {
-         border-radius: 8px;
-         padding: 10px 24px; /* Some padding */
-         cursor: pointer; /* Pointer/hand icon */
-         float: center; /* Float the buttons side by side */
-		 margin: 5px;
-   }
-</style>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
 
   {% if title %}
   <title>{{ title }} - Microblog</title>
   {% else %}
   <title>Welcome to Microblog</title>
   {% endif %}
+
 </head>
 <body ng-controller="PiFaceController">
+
+<!-- Responsive Navigation Bar -->
+<ul class="topnav">
+  <li><a class="active" href="/">Home</a></li>
+  <li class="right"><a href="#contact">Contact</a></li>
+  <li class="right"><a href="#about">About</a></li>
+</ul>
         {%block buttons %}{% endblock %}
 
         {% block content %}{% endblock %}
