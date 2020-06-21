@@ -2,6 +2,8 @@ from app import app
 from flask import render_template, jsonify, make_response, request
 from app import logger
 import traceback
+import os,subprocess
+import psutil as ps
 
 # Constants
 NAS_MNT_POINT = "/home/pi/Taansh_HD"
@@ -16,7 +18,6 @@ user = {'username':'Taansh'}
 
 @app.route('/get_ip_addr')
 def get_ip_addr():
-    import subprocess
     ip_addr = None
     o = subprocess.run(["hostname","-I"], capture_output=True)
     ip_addr = o.stdout.decode("utf-8")
@@ -28,7 +29,6 @@ def get_ip_addr():
 
 @app.route('/nas_mount_status')
 def nas_mount_status():
-    import os,subprocess
     mount_status = os.path.ismount(NAS_MNT_POINT)
     if not mount_status:
         subprocess.run(NAS_MNT_CMD, capture_output=True) 
@@ -37,8 +37,6 @@ def nas_mount_status():
     
 @app.route('/deluge_status')
 def deluge_status():
-    import psutil as ps
-    import subprocess
     d_status = "Disabled"
     pidlist = [(p.pid, p.name()) for p in ps.process_iter()]
     for p in pidlist:
@@ -59,8 +57,6 @@ def deluge_status():
 
 @app.route('/delugeweb_status')
 def delugeweb_status():
-    import psutil as ps
-    import subprocess
     d_status = "Disabled"
     pidlist = [(p.pid, p.name()) for p in ps.process_iter()]
     for p in pidlist:
@@ -82,8 +78,6 @@ def delugeweb_status():
 
 @app.route('/launch_retropie')
 def launch_retropie():
-    import psutil as ps
-    import os
     status = "Disabled"
     pidlist = [(p.pid, p.name()) for p in ps.process_iter()]
     for p in pidlist:
@@ -97,13 +91,11 @@ def launch_retropie():
 
 @app.route('/display_up')
 def display_up():
-    import os
     os.system("startx")
     return make_response(jsonify("Power Up the Pixel Desktop"), 200)
 
 @app.route('/reboot')
 def reboot():
-    import os
     os.system("sudo shutdown -r now")
     return make_response(jsonify("Rebooting..."), 200)
 
