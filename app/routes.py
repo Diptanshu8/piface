@@ -4,6 +4,7 @@ from app import logger
 import traceback
 import os,subprocess
 import psutil as ps
+import time
 
 # Constants
 NAS_MNT_POINT = "/home/pi/Taansh_HD"
@@ -11,7 +12,7 @@ DELGW_CONF = "/home/pi/.conf/deluge/web.conf"
 NAS_MNT_CMD = ["sudo","mount.cifs","-vvv","//192.168.1.1/DJ","/home/pi/Taansh_HD/", "-o", "guest,vers=1.0"]
 DELGD_CMD = ["deluged"]
 DELGW_CMD = ["deluge-web","-f"]
-RETROPIE_LAUNCH_CMD = 'screen -s /bin/bash -d -m emulationstation'
+SYNCTHING_CMD = "screen -s /bin/bash -d -m syncthing -logfile ~/syncthing.log"
 
 # Userdetails for base.html
 user = {'username':'Taansh'}
@@ -26,7 +27,6 @@ def get_ip_addr():
     else:
         return make_response(jsonify(ip_addr), 500);
 
-
 @app.route('/nas_mount_status')
 def nas_mount_status():
     mount_status = os.path.ismount(NAS_MNT_POINT)
@@ -38,56 +38,56 @@ def nas_mount_status():
 @app.route('/deluge_status')
 def deluge_status():
     d_status = "Disabled"
+    d_web_status = "Disabled"
     pidlist = [(p.pid, p.name()) for p in ps.process_iter()]
     for p in pidlist:
         if "deluged" in p[1]:
             d_status = "Enabled"
+        if "deluge-web" in p[1]:
+            d_web_status = "Enabled"
 
     if (d_status == "Disabled"):
         try:
             subprocess.run(DELGD_CMD)
         except subprocess.CalledProcessError as e:
             return make_response(jsonify(e), 500)
-
+    if (d_web_status == "Disabled"):
+        try:
+            subprocess.run(DELGW_CMD)
+            # Mandatory delay for deluge web to start 
+            time.sleep(2)
+        except subprocess.CalledProcessError as e:
+            return make_response(jsonify(e), 500)
     pidlist = [(p.pid, p.name()) for p in ps.process_iter()]
     for p in pidlist:
         if "deluged" in p[1]:
             d_status = "Enabled"
-    return make_response(jsonify(d_status), 200)
-
-@app.route('/delugeweb_status')
-def delugeweb_status():
-    d_status = "Disabled"
-    pidlist = [(p.pid, p.name()) for p in ps.process_iter()]
-    for p in pidlist:
         if "deluge-web" in p[1]:
-            d_status = "Enabled"
+            d_web_status = "Enabled"
+    if d_status == d_web_status =="Enabled":
+        return make_response(jsonify(d_status), 200)
+    return make_response(jsonify(d_status), 500)
 
-    if (d_status == "Disabled"):
-        try:
-            subprocess.run(DELGW_CMD)
-        except subprocess.CalledProcessError as e:
-            return make_response(jsonify(e), 500)
-
-    pidlist = [(p.pid, p.name()) for p in ps.process_iter()]
-    for p in pidlist:
-        if "deluge-web" in p[1]:
-            d_status = "Enabled"
-
-    return make_response(jsonify(d_status), 200)
-
-@app.route('/launch_retropie')
-def launch_retropie():
+@app.route('/syncthing_status')
+def syncthing_status():
     status = "Disabled"
     pidlist = [(p.pid, p.name()) for p in ps.process_iter()]
     for p in pidlist:
-        if "emulation" in p[1]:
+        if "syncthing" in p[1]:
             status = "Enabled"
+            return make_response(jsonify(status), 200)
 
     if (status == "Disabled"):
-        os.system(RETROPIE_LAUNCH_CMD)
-        status = "Enabled"
-    return make_response(jsonify(status), 200)
+        os.system(SYNCTHING_CMD)
+        time.sleep(2)
+
+    pidlist = [(p.pid, p.name()) for p in ps.process_iter()]
+    for p in pidlist:
+        if "syncthing" in p[1]:
+            status = "Enabled"
+            return make_response(jsonify(status), 200)
+
+    return make_response(jsonify(status), 500)
 
 @app.route('/display_up')
 def display_up():

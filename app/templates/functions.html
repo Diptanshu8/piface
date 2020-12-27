@@ -1,13 +1,12 @@
 {% extends "base.html" %}
 
 {% block buttons %}
-		<div class="btn-group row text-center">
-		  <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="ip_addr_btn"   ng-click="btn_click($event);"  >IP Address</button>
-          <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="mnt_stat_btn"  ng-click="btn_click($event);" >Mount Status</button>
-		  <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="delg_stat_btn" ng-click="btn_click($event);">Deluge Deamon Status</button>
-		  <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="delgweb_stat_btn" ng-click="btn_click($event);">Deluge Web Status</button>
-		  <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="retropie_launch_btn" ng-click="btn_click($event);">Launch Retropie</button>
-		  <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="display_up_btn" ng-click="btn_click($event);">Power Display Up</button>
-		  <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="reboot_btn" ng-click="btn_click($event);">Reboot Raspi</button>
-		</div>
+    <div class="btn-group row text-center">
+        <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="ip_addr_btn"   ng-click="btn_click($event);"  >IP Address</button>
+        <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="mnt_stat_btn"  ng-click="btn_click($event);" >Mount Status</button>
+        <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="deluge_btn" ng-click="btn_click($event);">Deluge Status</button>
+        <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="syncthing_btn" ng-click="btn_click($event);">Syncthing Status</button>
+        <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="display_up_btn" ng-click="btn_click($event);">Power Display Up</button>
+        <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="reboot_btn" ng-click="btn_click($event);">Reboot Raspi</button>
+    </div>
 {% endblock %}
