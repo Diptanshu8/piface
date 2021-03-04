@@ -13,6 +13,9 @@ NAS_MNT_CMD = ["sudo","mount.cifs","-vvv","//192.168.1.1/DJ","/home/pi/Taansh_HD
 DELGD_CMD = ["deluged"]
 DELGW_CMD = ["deluge-web","-f"]
 SYNCTHING_CMD = "screen -s /bin/bash -d -m syncthing -logfile ~/syncthing.log"
+MMM_START = "sudo systemctl start magicmirror"
+MMM_STATUS = "sudo systemctl status magicmirror"
+MMM_STOP = "sudo systemctl stop magicmirror"
 
 # Userdetails for base.html
 user = {'username':'Taansh'}
@@ -93,6 +96,41 @@ def syncthing_status():
 def display_up():
     os.system("startx")
     return make_response(jsonify("Power Up the Pixel Desktop"), 200)
+
+@app.route('/magicmirror_start')
+def magicmirror_start():
+    status = "Disabled"
+    ret_code = os.system(MMM_STATUS)
+    if ret_code == 0:
+        status = "Enabled"
+
+    if (status == "Disabled"):
+        os.system(MMM_START)
+        time.sleep(2)
+
+        ret_code = os.system(MMM_STATUS)
+        if ret_code == 0:
+            status = "Enabled"
+        else:
+            return make_response(jsonify(status), 500)
+    return make_response(jsonify(status), 200)
+
+@app.route('/magicmirror_stop')
+def magicmirror_stop():
+    status = "Enabled"
+    ret_code = os.system(MMM_STATUS)
+    if ret_code == 768:
+        status = "Disabled"
+
+    if (status == "Enabled"):
+        os.system(MMM_STOP)
+
+        ret_code = os.system(MMM_STATUS)
+        if ret_code == 768:
+            status = "Disabled"
+        else:
+            return make_response(jsonify(status), 500)
+    return make_response(jsonify(status), 200)
 
 @app.route('/reboot')
 def reboot():

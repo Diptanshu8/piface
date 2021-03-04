@@ -14,6 +14,8 @@
     $scope.buttons['deluge_btn'] = '/deluge_status';
     $scope.buttons['syncthing_btn'] = '/syncthing_status';
     $scope.buttons['display_up_btn'] = '/display_up';
+    $scope.buttons['magicmirror_start_btn'] = '/magicmirror_start';
+    $scope.buttons['magicmirror_stop_btn'] = '/magicmirror_stop';
     $scope.buttons['reboot_btn'] = '/reboot';
 
     // A dict of all supported buttons:
@@ -23,6 +25,7 @@
     $scope.internal_redirects = {};
     $scope.internal_redirects['deluge_btn'] = '6788';
     $scope.internal_redirects['syncthing_btn'] = '8384';
+    $scope.internal_redirects['magicmirror_start_btn'] = '8080';
 
     $scope.btn_click = function(event) {
         var button = angular.element(document.getElementById(event.target.id));
