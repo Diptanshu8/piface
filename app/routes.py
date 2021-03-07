@@ -16,6 +16,7 @@ SYNCTHING_CMD = "screen -s /bin/bash -d -m syncthing -logfile ~/syncthing.log"
 MMM_START = "sudo systemctl start magicmirror"
 MMM_STATUS = "sudo systemctl status magicmirror"
 MMM_STOP = "sudo systemctl stop magicmirror"
+RETROPIE_LAUNCH_CMD = 'screen -s /bin/bash -d -m emulationstation'
 
 # Userdetails for base.html
 user = {'username':'Taansh'}
@@ -101,7 +102,7 @@ def display_up():
 def magicmirror_start():
     status = "Disabled"
     ret_code = os.system(MMM_STATUS)
-    if ret_code == 0:
+    if ret_code == 0:       # on the basis of retcode of systemctl
         status = "Enabled"
 
     if (status == "Disabled"):
@@ -119,7 +120,7 @@ def magicmirror_start():
 def magicmirror_stop():
     status = "Enabled"
     ret_code = os.system(MMM_STATUS)
-    if ret_code == 768:
+    if ret_code == 768:         # on the basis of retcode of systemctl
         status = "Disabled"
 
     if (status == "Enabled"):
@@ -130,6 +131,20 @@ def magicmirror_stop():
             status = "Disabled"
         else:
             return make_response(jsonify(status), 500)
+    return make_response(jsonify(status), 200)
+
+@app.route('/launch_retropie')
+def launch_retropie():
+    status = "Disabled"
+    pidlist = [(p.pid, p.name()) for p in ps.process_iter()]
+    for p in pidlist:
+        if "emulation" in p[1]:
+            status = "Enabled"
+
+    if (status == "Disabled"):
+        os.system(RETROPIE_LAUNCH_CMD)
+        status = "Enabled"
+    
     return make_response(jsonify(status), 200)
 
 @app.route('/reboot')

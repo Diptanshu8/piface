@@ -16,6 +16,7 @@
     $scope.buttons['display_up_btn'] = '/display_up';
     $scope.buttons['magicmirror_start_btn'] = '/magicmirror_start';
     $scope.buttons['magicmirror_stop_btn'] = '/magicmirror_stop';
+    $scope.buttons['retropie_launch_btn'] = '/launch_retropie';
     $scope.buttons['reboot_btn'] = '/reboot';
 
     // A dict of all supported buttons:
