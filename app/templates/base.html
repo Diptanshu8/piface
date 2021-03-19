@@ -10,7 +10,7 @@
 <script src="{{ url_for('static', filename='main.js') }}"></script>
 
   {% if title %}
-  <title>{{ title }} PiFace</title>
+  <title>{{ title }}</title>
   {% else %}
   <title>Welcome to PiFace</title>
   {% endif %}
@@ -27,6 +27,7 @@
 </ul>
 <div class="container">
 {%block buttons %}{% endblock %}
+{%block settings %}{% endblock %}
 </div>
 <div class="clearfix"></div>
 </body>

@@ -19,7 +19,7 @@ MMM_STOP = "sudo systemctl stop magicmirror"
 RETROPIE_LAUNCH_CMD = 'screen -s /bin/bash -d -m emulationstation'
 
 # Userdetails for base.html
-user = {'username':'Taansh'}
+user = {'username':'Skrill'}
 
 @app.route('/get_ip_addr')
 def get_ip_addr():
@@ -154,11 +154,11 @@ def reboot():
 
 @app.route('/settings')
 def settings():
-    return "Settings page!"
+    return render_template('settings.html', title="DJPI's Piface Settings", user = user)
 
 @app.route('/')
 def index():
-    return render_template('functions.html', title="Diptanshu's", user = user)
+    return render_template('functions.html', title="DJPI's Piface", user = user)
 
 @app.after_request
 def after_request(response):
