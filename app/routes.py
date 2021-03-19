@@ -152,6 +152,10 @@ def reboot():
     os.system("sudo shutdown -r now")
     return make_response(jsonify("Rebooting..."), 200)
 
+@app.route('/settings')
+def settings():
+    return "Settings page!"
+
 @app.route('/')
 def index():
     return render_template('functions.html', title="Diptanshu's", user = user)
