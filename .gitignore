@@ -9,3 +9,6 @@
 
 #frontend
 app/static/bower_components/
+
+# DB
+app.db
