@@ -19,6 +19,14 @@
     $scope.buttons['retropie_launch_btn'] = '/launch_retropie';
     $scope.buttons['reboot_btn'] = '/reboot';
 
+    // A dict of all buttons are being displayed.
+    // key = btn_id
+    // value = true/false;
+    $scope.show = {};
+    Object.entries($scope.buttons).forEach(([key, value]) => {
+       $scope.show[key]=true;
+       });
+
     // A dict of all supported buttons:
     // Order:
     // key  = ID of the button

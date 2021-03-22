@@ -2,16 +2,32 @@
 
 {% block buttons %}
     <div class="btn-group row text-center">
-        <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="ip_addr_btn"   ng-click="btn_click($event);"  >IP Address</button>
-        <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="mnt_stat_btn"  ng-click="btn_click($event);" >Mount Status</button>
-        <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="deluge_btn" ng-click="btn_click($event);">Deluge Status</button>
-        <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="syncthing_btn" ng-click="btn_click($event);">Syncthing Status</button>
-        <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="retropie_launch_btn" ng-click="btn_click($event);">Launch Retropie</button>
-        <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="magicmirror_start_btn" ng-click="btn_click($event);">Magic Mirror Start</button>
-        <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="magicmirror_stop_btn" ng-click="btn_click($event);">Magic Mirror Stop</button>
+        <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="ip_addr_btn" ng-click="btn_click($event);"
+ng-show="show['ip_addr_btn']" class="ng-hide" >IP Address</button>
+        <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="mnt_stat_btn"  ng-click="btn_click($event);"
+ng-show="show['mnt_stat_btn']" class="ng-hide">Mount Status</button>
+        <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="deluge_btn" ng-click="btn_click($event);" 
+ng-show="show['deluge_btn']" class="ng-hide">Deluge Status</button>
+        <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="syncthing_btn" ng-click="btn_click($event);"
+ng-show="show['syncthing_btn']" class="ng-hide">Syncthing Status</button>
+        <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="retropie_launch_btn" ng-click="btn_click($event);"
+ng-show="show['retropie_launch_btn']" class="ng-hide">Launch Retropie</button>
+        <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="magicmirror_start_btn" ng-click="btn_click($event);"
+ ng-show="show['magicmirror_start_btn']" class="ng-hide">Magic Mirror Start</button>
+        <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="magicmirror_stop_btn" ng-click="btn_click($event);"
+ng-show="show['magicmirror_stop_btn']" class="ng-hide">Magic Mirror Stop</button>
 	<!--
         <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="display_up_btn" ng-click="btn_click($event);">Power Display Up</button>
 	-->
-	<button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="reboot_btn" ng-click="btn_click($event);">Reboot Raspi</button>
+	<button class="col-sm|md|lg|xl-2 btn btn-primary rounded" id="reboot_btn" ng-click="btn_click($event);"
+ng-show="show['reboot_btn']" class="ng-hide">Reboot Raspi</button>
     </div>
+{% endblock %}
+
+{%block settings %}
+{% raw %}
+    <div ng-repeat="(btn_name, route) in buttons">
+	<input type="checkbox" ng-model="show[btn_name]" [ng-true-value="true"] [ng-false-value="false"]> {{btn_name}}
+    </div>
+{% endraw %}
 {% endblock %}
