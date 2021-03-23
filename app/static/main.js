@@ -4,57 +4,82 @@
 
   .controller('PiFaceController', ['$scope', '$log', '$http',
     function($scope, $log, $http) {
-    // A dict of all supported buttons:
-    // Order:
-    // key  = ID of the button
-    // value= callback to the server
-    $scope.buttons = {};
-    $scope.buttons['ip_addr_btn'] = '/get_ip_addr';
-    $scope.buttons['mnt_stat_btn'] = '/nas_mount_status';
-    $scope.buttons['deluge_btn'] = '/deluge_status';
-    $scope.buttons['syncthing_btn'] = '/syncthing_status';
-    $scope.buttons['display_up_btn'] = '/display_up';
-    $scope.buttons['magicmirror_start_btn'] = '/magicmirror_start';
-    $scope.buttons['magicmirror_stop_btn'] = '/magicmirror_stop';
-    $scope.buttons['retropie_launch_btn'] = '/launch_retropie';
-    $scope.buttons['reboot_btn'] = '/reboot';
+    $scope.buttons_list = [
+        {
+            'id'      : 'IP Address',
+            'route'     : '/get_ip_addr',
+            'redirect'  : "",
+            'show'      : true,
+        },
+        {
+            'id'      : 'Mount Status',
+            'route'     : '/nas_mount_status',
+            'redirect'  : "",
+            'show'      : true,
+        },
+        {
+            'id'      : 'Deluge Status',
+            'route'     : '/deluge_status',
+            'redirect'  : '6788',
+            'show'      : true,
+        },
+        {
+            'id'      : 'Syncthing Status',
+            'route'     : '/syncthing_status',
+            'redirect'  : '8384',
+            'show'      : true,
+        },
+        {
+            'id'      : 'Launch Retropie',
+            'route'     : '/launch_retropie',
+            'redirect'  : "",
+            'show'      : true,
+        },
+        {
+            'id'      : 'Magic Mirror Start',
+            'route'     : '/magicmirror_start',
+            'redirect'  : '8080',
+            'show'      : true,
+        },
+        {
+            'id'      : 'Magic Mirror Stop',
+            'route'     : '/magicmirror_stop',
+            'redirect'  : "",
+            'show'      : true,
+        },
+        {
+            'id'      : 'Reboot Raspi',
+            'route'     : '/reboot',
+            'redirect'  : '',
+            'show'      : true,
+        },
+    ];
 
-    // A dict of all buttons are being displayed.
-    // key = btn_id
-    // value = true/false;
-    $scope.show = {};
-    Object.entries($scope.buttons).forEach(([key, value]) => {
-       $scope.show[key]=true;
-       });
-
-    // A dict of all supported buttons:
-    // Order:
-    // key  = ID of the button
-    // value= port to redirect to for local links
-    $scope.internal_redirects = {};
-    $scope.internal_redirects['deluge_btn'] = '6788';
-    $scope.internal_redirects['syncthing_btn'] = '8384';
-    $scope.internal_redirects['magicmirror_start_btn'] = '8080';
-
-    $scope.btn_click = function(event) {
-        var button = angular.element(document.getElementById(event.target.id));
-        // Check if the button ID is added to $scope.buttons for callback.
-        if (!(event.target.id in $scope.buttons))
-            alert(event.target.id + " is invalid ID.");
+    $scope.button_click = function(src_id) {
+        var button = angular.element(document.getElementById(src_id));
+        // Check if the ID from ng-click matches the IDs present in the list of buttons.
+        // Either of too many buttons with same ID or no buttons with matching ID is a problem.
+        // TODO: Handle the errors in seperate alerts.
+        var buttons = $scope.buttons_list.filter(function(obj) {
+                    return obj.id == src_id;});
+        if (buttons.length != 1)
+            alert(src_id + " is invalid button ID.");
         else {
-            // Check if the button is already pressed and status is being shown.
+            $log.log(src_id);
+            var b = buttons[0];
             if (button.hasClass("btn-primary")) {
                 var old = button.text() + ": ";
                 button.removeClass("btn-primary");
-                $http.get($scope.buttons[event.target.id]).
+                // TODO: add timeout and remove just one time click feature via btn-primary class check.
+                $http.get(b.route).
                     success(function(data) {
                         $log.log(data);
                         button.text(old+data);
                         button.addClass("btn-success");
                         // Redirects to a new tab with respective page.
-                        if (event.target.id in $scope.internal_redirects)
-                            window.open("//" + window.location.hostname + ":" +
-                                $scope.internal_redirects[event.target.id]);
+                        if (b.redirect!="") {
+                            window.open("//" + window.location.hostname + ":" +b.redirect);
+                        }
                     }).
                     error(function(error) {
                         $log.log(error);
@@ -65,7 +90,7 @@
             else 
                 alert("Status already being shown. Reload and click again!");
         }
-            };
+        };
     }
   ]);
 }());
