@@ -56,7 +56,8 @@
     ];
 
     $scope.button_click = function(src_id) {
-        var button = angular.element(document.getElementById(src_id));
+        var button_dom_element = document.getElementById(src_id); 
+        var button = angular.element(button_dom_element);
         // Check if the ID from ng-click matches the IDs present in the list of buttons.
         // Either of too many buttons with same ID or no buttons with matching ID is a problem.
         // buttons is a list of all the buttons in buttons_list which match the ID of event source button.
@@ -73,6 +74,7 @@
             $log.log(src_id);
             var b = buttons[0];
             var old = button.text();
+            button_dom_element.disabled = true; 
             button.removeClass("btn-primary");
             $http.get(b.route).
                 success(function(data) {
@@ -95,6 +97,7 @@
                     if (button.hasClass("btn-danger"))
                         button.removeClass("btn-danger");
                     button.addClass("btn-primary");
+                    button_dom_element.disabled = false; 
                 }, 3000);
         }
     };
