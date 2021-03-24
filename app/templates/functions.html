@@ -2,18 +2,25 @@
 
 {% block buttons %}
 {% raw %}
-    <div class="btn-group row text-center">
-        <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" ng-repeat= "button in buttons_list" id="{{button.id}}"
-                ng-click="button_click(button.id)" ng-show="button.show" class="ng-hide">{{button.id}}</button>
-        {{test}}
+    <div id="page-content-wrapper">
+        <div class="btn-group row text-center">
+            <button class="col-sm|md|lg|xl-2 btn btn-primary rounded" ng-repeat= "button in buttons_list" id="{{button.id}}"
+                    ng-click="button_click(button.id)" ng-show="button.show" class="ng-hide">{{button.id}}</button>
+        </div>
     </div>
 {% endraw %}
 {% endblock %}
 
 {%block settings %}
 {% raw %}
-    <div ng-repeat="button in buttons_list">
-        <input type="checkbox" ng-model="button.show" [ng-true-value=true] [ng-false-value=false]> {{button.id}}
-    </div>
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper" class="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand"> <a href="#"> Button Toggler </a> </li>
+            <div ng-repeat="button in buttons_list">
+                <li> <a href="#" ng-model="button.show" ng-click="button.show = !button.show;">{{button.id}}</a> </li>
+            </div>
+        </ul>
+    </div> <!-- /#sidebar-wrapper -->
 {% endraw %}
 {% endblock %}
