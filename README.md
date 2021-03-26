@@ -15,8 +15,8 @@ To add more features/buttons, follow the following procedure:
 1. Add a callback in `routes.py` and attach a route to the callback.
 2. Add a button in `main.js` `button_list` and specify the button parameters as follows:
     | Property      | Description |
-    | -----------   | ----------- |
-    | id            | Unique ID for every button. This ID would be associated with the HTML `button` element. NOTE: id should be unique.|
+    | :---------:   | ----------- |
+    | id            | Unique ID for every button. This ID would be associated with the HTML `button` element.<br /> NOTE: `id` should be unique.| 
     | route         | Route in routes.py which would be called when a click event is triggered on this button.                          |
     | redirect      | Port to which redirect has to be done after button click (assuming the redirected server is hosted on Pi.         |
     | show          | Must be set to `true` for the button to be visible.                                                               |
