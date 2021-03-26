@@ -1,5 +1,5 @@
-# piface
-A front-end to all my Raspberry Pi hosted services' status
+# Raspberry Pi's Piface
+A front-end to all my Raspberry Pi hosted services' status and toggle switches to enable/disable them in directly via the browser.
 
 # Installation
 1. Fork/Clone this repository.
@@ -13,11 +13,14 @@ Once a server has been hosted as per steps mentioned above, you could access the
 # Development
 To add more features/buttons, follow the following procedure:
 1. Add a callback in `routes.py` and attach a route to the callback.
-2. Add a button in `functions.html` and specify the button ID parameter.
-3. Add the button ID of the newly created button in `main.js` as key-value pair with value corresponding to the route created in `routes.py`,
-    eg. 
-    ```buttons[<button ID>]='<route created>'```
-4. Reload and you are good to go!
+2. Add a button in `main.js` `button_list` and specify the button parameters as follows:
+    | Property      | Description |
+    | -----------   | ----------- |
+    | id            | Unique ID for every button. This ID would be associated with the HTML `button` element. NOTE: id should be unique.|
+    | route         | Route in routes.py which would be called when a click event is triggered on this button.                          |
+    | redirect      | Port to which redirect has to be done after button click (assuming the redirected server is hosted on Pi.         |
+    | show          | Must be set to `true` for the button to be visible.                                                               |
+3. Headover to `http://<server-IP address>:5000` and you are good to go!
 
 ## Note:
 1. Compatible with python3
