@@ -1,5 +1,6 @@
 # Raspberry Pi's Piface
 A front-end to all my Raspberry Pi hosted services' status and toggle switches to enable/disable them in directly via the browser.
+![Piface Frontend Snippet](/doc/piface_snippet.png "Piface Frontend Snippet.")
 
 # Installation
 1. Fork/Clone this repository.
