@@ -4,6 +4,7 @@ from app import logger
 import traceback
 import os,subprocess
 import psutil as ps
+import speedtest
 import time
 
 # Constants
@@ -92,6 +93,17 @@ def syncthing_status():
             return make_response(jsonify(status), 200)
 
     return make_response(jsonify(status), 500)
+
+@app.route('/speedtest_cli')
+def speedtest_cli():
+    s = speedtest.Speedtest()
+    s.get_best_server()
+    s.download()
+    s.upload()
+    results = s.results.dict()
+    download, upload, ping = int(round(results["download"]/1000000,0)), int(round(results["upload"]/1000000,0)), int(round(results["ping"],0))
+    output = "\nDownload: {} Mbps\nUpload: {} Mbps\nPing: {} ms".format(download, upload, ping)
+    return make_response(jsonify(output), 200)
 
 @app.route('/display_up')
 def display_up():
