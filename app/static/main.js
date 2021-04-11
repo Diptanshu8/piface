@@ -48,7 +48,7 @@
             'show'      : true,
         },
         {
-            'id'      : 'Speed test',
+            'id'      : 'Speed Test',
             'route'     : '/speedtest_cli',
             'redirect'  : "",
             'show'      : true,
