@@ -29,6 +29,7 @@
             'redirect'  : '8384',
             'show'      : true,
         },
+		/*
         {
             'id'      : 'Launch Retropie',
             'route'     : '/launch_retropie',
@@ -47,6 +48,7 @@
             'redirect'  : "",
             'show'      : true,
         },
+		*/
         {
             'id'      : 'Speed Test',
             'route'     : '/speedtest_cli',
