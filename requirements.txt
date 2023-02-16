@@ -11,4 +11,4 @@ psutil==5.7.0
 python-dotenv==0.13.0
 speedtest==0.0.1
 SQLAlchemy==1.4.35
-Werkzeug==1.0.1
+Werkzeug==2.2.3
